@@ -1,0 +1,34 @@
+{
+  "appconf": {
+    "api_key": "PUT_YOUR_APIKEY",
+    "api_url": "https://www.virustotal.com/vtapi/v2/file/report",
+    // 出力対象のウィルス対策ソフト
+    "av_list": [
+      "McAfee", 
+      "TrendMicro",
+      "F-Secure",
+      "Symantec"
+    ]
+  },
+  "log4js": {
+    "level": "ALL",
+    "configure": {
+      "appenders": [
+        {
+          "category": "error",
+          "type": "file",
+          "filename": "logs/error.log"
+        },
+        {
+          "category": "app",
+          "type": "file",
+          "filename": "logs/app.log"
+        },
+        {
+          "type": "console"
+        }
+      ],
+      "replaceConsole": true
+    }
+  }
+}

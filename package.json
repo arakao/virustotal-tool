@@ -1,0 +1,20 @@
+{
+  "name": "virustotal-tool",
+  "version": "0.1.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kobito",
+  "license": "MIT",
+  "dependencies": {
+    "co": "^4.6.0",
+    "config": "^1.21.0",
+    "hjson": "^1.8.4",
+    "log4js": "^0.6.37",
+    "moment": "^2.14.1",
+    "node-rest-client": "^2.0.1"
+  }
+}
