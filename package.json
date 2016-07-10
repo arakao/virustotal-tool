@@ -1,11 +1,15 @@
 {
   "name": "virustotal-tool",
   "version": "0.1.0",
+  "engines" : { "node" : ">=6.0.0 <7" },
   "description": "",
-  "private": true,
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/kikou5656/virustotal-tool.git"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js"
   },
   "author": "kobito",
   "license": "MIT",
