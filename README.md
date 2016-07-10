@@ -1,6 +1,7 @@
 # virustotal-tool
 
 ## Install
+前提としてnode(ver6.0.0以上)がインストールされていること
 ```
 git clone https://github.com/kikou5656/virustotal-tool
 cd virustotal-tool
