@@ -57,7 +57,7 @@ function getResultHeader() {
 
 function getResultRecord(data) {
 	const av_list = config.appconf.av_list;
-
+	
 	const result = [];
 	// [0]sha256
 	result.push(data.sha256);
@@ -67,8 +67,9 @@ function getResultRecord(data) {
 	result.push(data.md5);
 	// av_list loop
 	for(let av_idx = 0, av_len = av_list.length; av_idx < av_len; av_idx++) {
-		result.push(data.scans[av_list[av_idx]].detected);
-		result.push(data.scans[av_list[av_idx]].result);
+		const av_data = Object.assign({'detected': '', result: ''}, data.scans[av_list[av_idx]]);
+		result.push(av_data.detected);
+		result.push(av_data.result);
 	}
 	return result;
 }
