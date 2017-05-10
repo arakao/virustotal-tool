@@ -57,7 +57,7 @@ function getResultHeader() {
 
 function getResultRecord(data) {
 	const av_list = config.appconf.av_list;
-	
+
 	const result = [];
 	// [0]sha256
 	result.push(data.sha256);
@@ -110,8 +110,11 @@ co(function* () {
 		}
 		const data = yield getReport(hash_list[idx]);
 		logger.app.info(`report: ${JSON.stringify(data)}`);
-
-		result_list.push(getResultRecord(data));
+		if (data.response_code === 1) {
+			result_list.push(getResultRecord(data));
+		} else {
+			logger.app.warn(`request failed: ${data.verbose_msg}`)
+		}
 	}
 
 	writeResultCSV(result_list, 'result.csv');
