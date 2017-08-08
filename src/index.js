@@ -48,6 +48,8 @@ function getResultHeader() {
 	result_header.push('sha256');
 	result_header.push('sha1');
 	result_header.push('md5');
+　　　　　result_header.push('total');
+        result_header.push('positives');
 	for(let av_idx = 0, av_len = av_list.length; av_idx < av_len; av_idx++) {
 		result_header.push(`${av_list[av_idx]}_detected`);
 		result_header.push(`${av_list[av_idx]}_result`);
@@ -55,31 +57,8 @@ function getResultHeader() {
 	return result_header;
 }
 
-// エラーデータのレコードを取得
-function getErrRecord(data) {
-	const av_list = config.appconf.av_list;
-	const result = [];
-	// [0]sha256
-	result.push(data.resource);
-	// [1]sha1
-	result.push('');
-	// [2]md5
-	result.push('');
-	for (let av_idx = 0; av_idx < av_list.length; av_idx++) {
-		result.push('');
-		result.push('');
-	}
-	return result;
-}
-
 function getResultRecord(data) {
 	const av_list = config.appconf.av_list;
-	data = Object.assign({
-		'sha256': '',
-		'sha1': '',
-		'md5': '',
-		'scans': {},
-	}, data);
 
 	const result = [];
 	// [0]sha256
@@ -88,17 +67,15 @@ function getResultRecord(data) {
 	result.push(data.sha1);
 	// [2]md5
 	result.push(data.md5);
+        // [3]total
+        result.push(data.total);
+        // [4]positives
+        result.push(data.positives);
 	// av_list loop
 	for(let av_idx = 0, av_len = av_list.length; av_idx < av_len; av_idx++) {
-		if (av_list[av_idx] in data.scans) {
-			const av_data = Object.assign({'detected': '', 'result': ''}, data.scans[av_list[av_idx]]);
-			result.push(av_data.detected);
-			result.push(av_data.result);
-		}
-		else {
-			result.push('');
-			result.push('');
-		}
+		const av_data = Object.assign({'detected': '', result: ''}, data.scans[av_list[av_idx]]);
+		result.push(av_data.detected);
+		result.push(av_data.result);
 	}
 	return result;
 }
@@ -142,8 +119,7 @@ co(function* () {
 		if (data.response_code === 1) {
 			result_list.push(getResultRecord(data));
 		} else {
-			logger.app.warn(`request failed: ${data.verbose_msg}`);
-			result_list.push(getErrRecord(data));
+			logger.app.warn(`request failed: ${data.verbose_msg}`)
 		}
 	}
 
